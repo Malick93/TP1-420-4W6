@@ -1,28 +1,19 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
 <div class="container">
-  <input type="text" [(ngModel)]="artistName" name="artistName">&nbsp;<button (click)="getAlbums()">Chercher les albums</button><hr>
-  <div class="row">
-    <div class="col-6" style="text-align: center;">
-      <h1 class="title">Albums de {{artistName}}</h1>
+  <input type="text"  [(ngModel)]="artistName" name="artistName">&nbsp;<button class="btn" style="background-color: gray;" (click)="getAlbums()">Chercher les albums</button><hr>
+  <div class="row ">
+    <div class="col-6" style="text-align: center; background-color: rgb(214, 209, 209); padding: 20px; border-radius: 10px; font-weight: bold;">
+      <h1 class="title">Albums de {{artistName}}</h1><hr>
       <br><br>
-      <span *ngIf="!artistExiste">Artiste introuvable, veuillez reessayez</span>
+      <span *ngIf="!artistExiste" style="font-size: 8mm;">Artiste introuvable, veuillez reessayez</span>
       <div class="row">
         <div class="col-4" *ngFor="let album of albums" (click)="getChansons(album)">
         {{ album.name }} <br> <img src="{{album.image}}" alt="{{album.name}}">
       </div>
       </div>
-      
-      
     </div>
-    <div class="col-6">
-      <h1>chansons de l'album {{albumName}}</h1>  <br><br>
+    <div class="col-6" style="text-align: center; background-color: rgb(230, 225, 225); padding: 20px; border-radius: 10px;">
+      <h1>chansons de l'album {{albumName}}</h1> <hr> <br><br>
       <ul>
         <li *ngFor="let chanson of chansons">
           {{chanson}}
@@ -31,14 +22,5 @@
     </div>
   </div>
 </div>
-
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
 
 <router-outlet />
