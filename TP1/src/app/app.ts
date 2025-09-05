@@ -16,27 +16,37 @@ export class App {
    constructor(public http : HttpClient){}
   protected readonly title = signal('TP1');
   artistName: String = ""
-  albums : string[] = []
-  chansons: string[] = []
+  albums : Album[] = []
+  chansons: String[] = []
+  albumName: String = "";
+  artistExiste: boolean = true;
   async getAlbums(){
+    this.albums = []
+    this.chansons = []
+    this.albumName = ""
     const apiKey = '9a8a3facebbccaf363bb9fd68fa37abf'
     const url = `http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=${this.artistName}&api_key=${apiKey}&format=json`
-    const x = await lastValueFrom(this.http.get<any>(url));
-    console.log(x)
-     try {
+    try {
     const response: any = await lastValueFrom(this.http.get<any>(url));
     const albumsFromLink = response.topalbums.album; 
-    this.albums = albumsFromLink.map((album: any) => album.name)
-
-  } catch(e) {
-    this.albums = ["Erreur"]
+    this.albums = albumsFromLink.map((unAlbum: any) => { 
+      const imageUrl = unAlbum.image.find((img: any) => img.size === 'large')?.['#text'];
+      return new Album(this.artistName ,unAlbum.name, imageUrl)})
+      this.artistExiste = true;
+    } catch(e) {
+      this.artistExiste = false;
+    }
   }
-  console.log(this.albums)
-  }
 
-  async getChansons(){
+  async getChansons(album: Album){
+    this.chansons = []
+    this.albumName = album.name
+    this.artistName = album.artist
     const apiKey = '9a8a3facebbccaf363bb9fd68fa37abf'
-    const url = `http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=YOUR_API_KEY&artist=Cher&album=Believe&format=json`
+    const url = `http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${apiKey}&artist=${this.artistName}&album=${this.albumName}&format=json`
+    const x = await lastValueFrom(this.http.get<any>(url));
+    const tracksFromAlbum: any = x.album.tracks.track
+    this.chansons = tracksFromAlbum.map((track: any) => track.name)
   }
 }
 

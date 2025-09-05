@@ -10,16 +10,24 @@
   <input type="text" [(ngModel)]="artistName" name="artistName">&nbsp;<button (click)="getAlbums()">Chercher les albums</button><hr>
   <div class="row">
     <div class="col-6" style="text-align: center;">
-      Albums de {{artistName}}
+      <h1 class="title">Albums de {{artistName}}</h1>
       <br><br>
-      <div *ngFor="let album of albums">
-          {{ album}}
-        </div>
+      <span *ngIf="!artistExiste">Artiste introuvable, veuillez reessayez</span>
+      <div class="row">
+        <div class="col-4" *ngFor="let album of albums" (click)="getChansons(album)">
+        {{ album.name }} <br> <img src="{{album.image}}" alt="{{album.name}}">
+      </div>
+      </div>
+      
       
     </div>
     <div class="col-6">
-      chansons <br>
-      
+      <h1>chansons de l'album {{albumName}}</h1>  <br><br>
+      <ul>
+        <li *ngFor="let chanson of chansons">
+          {{chanson}}
+        </li>
+      </ul>
     </div>
   </div>
 </div>
